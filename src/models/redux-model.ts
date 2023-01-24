@@ -44,3 +44,7 @@ export interface CategoryArrayModel {
   "selected_categories": CategoryModel[],
   "post_categories": CategoryModel[],
 }
+
+export interface ErrorModel {
+  "error": string,
+}
