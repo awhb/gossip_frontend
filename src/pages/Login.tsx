@@ -6,6 +6,7 @@ import { Box, Paper, Typography } from '@material-ui/core';
 import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks';
 import { loginUser } from '../store/user-actions';
 import LoadingSpinner from '../components/LoadingSpinner';
+import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -34,39 +35,37 @@ const Login: React.FC = () => {
   };
 
   return localStorage.hasOwnProperty("token") ? <Navigate to="/" /> : (
-    <div>
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
-        <Paper elevation={3} style={{ padding: '20px' }}>
-          <form className={classes.form} onSubmit={handleSubmit}>
-            <h2>Login</h2>
-            <TextField
-              id="username"
-              label="Username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-            <br />
-            <TextField
-              id="password"
-              label="Password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <br />
-            {isLoading && (<LoadingSpinner />)}
-            {error && (
-              <Typography variant="body2" color="error">
-                {error}
-              </Typography>
-            )}
-            <Button variant="contained" color="primary" type="submit" className={classes.button}>
-              Login
-            </Button>
-          </form>
-        </Paper>
-      </Box>
-    </div>
+    <Grid container justify="center" alignItems="center" style={{ minHeight: '100vh' }}>
+      <Paper elevation={3} style={{ padding: '20px' }}>
+        <form className={classes.form} onSubmit={handleSubmit}>
+          <h2>Login</h2>
+          <TextField
+            id="username"
+            label="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <br />
+          <TextField
+            id="password"
+            label="Password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <br />
+          {isLoading && (<LoadingSpinner />)}
+          {error && (
+            <Typography variant="body2" color="error">
+              {error}
+            </Typography>
+          )}
+          <Button variant="contained" color="primary" type="submit" className={classes.button}>
+            Login
+          </Button>
+        </form>
+      </Paper>
+    </Grid>  
   );
 };
 
