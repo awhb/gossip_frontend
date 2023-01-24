@@ -6,8 +6,9 @@ export interface UserModel {
 
 export interface UserArrayModel {
   "all_users": UserModel[],
-  "current_user": UserModel,
   "selected_user": UserModel,
+  "current_user": UserModel,
+  "isLoading": boolean,
 }
 
 export interface PostModel {
@@ -47,4 +48,9 @@ export interface CategoryArrayModel {
 
 export interface ErrorModel {
   "error": string,
+}
+
+export interface AuthModel {
+  "user": UserModel,
+  "token": string,
 }

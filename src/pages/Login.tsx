@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { TextField, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, Paper, Typography } from '@material-ui/core';
-import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../store/userSlice';
+import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks';
+import { loginUser } from '../store/user-actions';
 import LoadingSpinner from '../components/LoadingSpinner';
 
 const useStyles = makeStyles((theme) => ({
@@ -22,14 +22,15 @@ const Login: React.FC = () => {
   const classes = useStyles();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const { error, isLoading } = useSelector(selectAuth);
+  const error = useAppSelector(state => state.errors.error);
+  const isLoading = useAppSelector(state => state.users.isLoading);
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    dispatch(login({ username, password }));
+    dispatch(loginUser(username, password));
   };
 
   return localStorage.hasOwnProperty("token") ? <Navigate to="/" /> : (

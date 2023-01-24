@@ -2,7 +2,7 @@ import postSlice from "./postSlice";
 import { AnyAction } from "@reduxjs/toolkit";
 import { ThunkAction } from "@reduxjs/toolkit";
 import { RootState } from "./index";
-import { CategoryModel, ErrorModel, PostModel } from "../../src/models/redux-model";
+import { ErrorModel, PostModel } from "../../src/models/redux-model";
 import postService from "../services/postService";
 import { useNavigate } from "react-router-dom";
 import errorSlice from "./errorSlice";

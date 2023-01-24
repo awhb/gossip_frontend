@@ -1,37 +1,90 @@
-import postSlice from "./postSlice";
+import userSlice from "./userSlice";
 import { AnyAction } from "@reduxjs/toolkit";
 import { ThunkAction } from "@reduxjs/toolkit";
 import { RootState } from "./index";
-import { PostModel } from "../../src/models/redux-model";
-import postService from "../services/postService";
+import { AuthModel, ErrorModel, UserModel } from "../../src/models/redux-model";
+import userService from "../services/userService";
+import { useNavigate } from "react-router-dom";
+import errorSlice from "./errorSlice";
 
-export const postActions = postSlice.actions;
+export const userActions = userSlice.actions;
+export const errorActions = errorSlice.actions;
+
+const navigate = useNavigate();
 
 // index
-export const fetchPosts = (): ThunkAction<void, RootState, unknown, AnyAction> => {
+export const fetchUsers = (): ThunkAction<void, RootState, unknown, AnyAction> => {
   return async (dispatch,getState) => {
-    const response:PostModel[] = await postService.getAllPosts();
-    dispatch(postActions.setPosts(response));
+    const response: UserModel[] = await userService.getAllUsers();
+    dispatch(userActions.setUsers(response));
   };
 }
 
 // show
-export const fetchParticularPost = (post_id:number): ThunkAction<void, RootState, unknown, AnyAction> => { 
+export const fetchSelectedUser = (user_id:number): ThunkAction<void, RootState, unknown, AnyAction> => { 
   return async (dispatch,getState) => {
-    const response:PostModel = await postService.getParticularPost(post_id);
-    dispatch(postActions.setParticularPost(response));
+    const response: UserModel = await userService.getSelectedUser(user_id);
+    dispatch(userActions.setSelectedUser(response));
   };
 }
 
-// create post
-export const createPost = (post_id:number): ThunkAction<void, RootState, unknown, AnyAction> => { 
+// create/sign up
+export const createUser = (username: string, password:string): ThunkAction<void, RootState, unknown, AnyAction> => { 
   return async (dispatch,getState) => {
-    const response:PostModel = await postService.getParticularPost(post_id);
-    dispatch(postActions.setParticularPost(response));
+    dispatch(userActions.setIsLoading(true));
+    const response: AuthModel | ErrorModel = await userService.createUser(username, password);
+    if ("error" in response) {
+      dispatch(userActions.setIsLoading(false));
+      dispatch(errorActions.setError(response.error));
+    } else { 
+      dispatch(userActions.setCurrentUser(response.user));
+      localStorage.setItem("token", response.token);
+      dispatch(userActions.setIsLoading(false));
+      navigate(`/`)
+    }
   };
 }
 
-// update post
+// update
+export const updateUser = (user_id: number, username: string, password:string): ThunkAction<void, RootState, unknown, AnyAction> => {
+  return async (dispatch,getState) => {
+    const response: UserModel | ErrorModel = await userService.updateUser(user_id, username, password);
+    if ("error" in response) {
+      dispatch(errorActions.setError(response.error));
+    } else { 
+      dispatch(userActions.setSelectedUser(response));
+      navigate(`/user/${response.id}`)
+    }
+  };
+}
 
-// delete post
+// delete
+export const deleteUser = (user_id:number): ThunkAction<void, RootState, unknown, AnyAction> => {
+  return async (dispatch,getState) => {
+    const response: UserModel[] | ErrorModel = await userService.deleteUser(user_id);
+    if ("error" in response) {
+      dispatch(errorActions.setError(response.error));
+    } else { 
+      dispatch(userActions.setUsers(response));
+      // local storage remove item
+      navigate(`/users`)
+    }
+  };
+}
 
+// login
+export const loginUser = (username:string, password:string): ThunkAction<void, RootState, unknown, AnyAction> => {
+  return async (dispatch,getState) => {
+    dispatch(userActions.setIsLoading(true));
+    const response: AuthModel | ErrorModel = await userService.loginUser(username, password);
+    if ("error" in response) {
+      dispatch(userActions.setIsLoading(false));
+      dispatch(errorActions.setError(response.error));
+    } else { 
+      dispatch(userActions.setCurrentUser(response.user));
+      localStorage.setItem("token", response.token);
+      dispatch(userActions.setIsLoading(false));
+      navigate(`/`)
+    }
+  };
+}

@@ -1,13 +1,15 @@
 // store.ts
 import { configureStore } from "@reduxjs/toolkit";
-import authReducer from './userSlice';
+import errorSlice from "./errorSlice";
 import postSlice from './postSlice';
+import userSlice from './userSlice';
 
 
 const store = configureStore({
   reducer: {
+    users: userSlice.reducer,
     posts: postSlice.reducer,
-    auth: authReducer,
+    errors: errorSlice.reducer,
   }
 });
 
