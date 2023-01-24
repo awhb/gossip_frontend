@@ -4,6 +4,7 @@ import Home from "./components/Home";
 import Posts from "./components/Posts";
 import Recipe from "./components/Recipe"
 import NewRecipe from "./components/NewRecipe";
+import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import "./App.css";
 import AppBar from "./components/AppBar";
@@ -28,6 +29,7 @@ function App() {
           <main>
             <Routes>
               <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
               <Route path="/" element={<Home />} />
               <Route path="/posts" element={<Posts />} />
               <Route path="/posts/:id" element={<Recipe />} />

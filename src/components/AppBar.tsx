@@ -12,6 +12,11 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import Button from '@mui/material/Button';
 import { Link } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+import userSlice from '../store/userSlice';
+import { useAppDispatch } from '../hooks/redux-hooks';
+
+export const userActions = userSlice.actions;
 
 export default function MenuAppBar() {
   const [auth, setAuth] = React.useState(true);
@@ -27,6 +32,16 @@ export default function MenuAppBar() {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const logOut = () => {
+    dispatch(userActions.clearCurrentUser());
+    localStorage.removeItem("token");
+    setAnchorEl(null);
+    navigate("/");
   };
 
   return (
@@ -76,7 +91,7 @@ export default function MenuAppBar() {
                 onClose={handleClose}
               >
                 <MenuItem onClick={handleClose}>My Account</MenuItem>
-                <MenuItem onClick={handleClose}>Logout</MenuItem>
+                <MenuItem onClick={logOut}>Logout</MenuItem>
               </Menu>
             </div>
           )}

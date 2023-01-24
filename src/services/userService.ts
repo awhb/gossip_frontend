@@ -24,7 +24,7 @@ return response.data;
 },
 // login
 async loginUser(username:string, password:string) {
-  var response = await Api().post(`/login`, {username, password});
+  var response = await Api().post(`/login`, { "user": {"username": username, "password": password}});
   return response.data;
 },
 }
