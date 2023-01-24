@@ -10,8 +10,6 @@ import errorSlice from "./errorSlice";
 export const userActions = userSlice.actions;
 export const errorActions = errorSlice.actions;
 
-const navigate = useNavigate();
-
 // index
 export const fetchUsers = (): ThunkAction<void, RootState, unknown, AnyAction> => {
   return async (dispatch,getState) => {
@@ -40,7 +38,6 @@ export const createUser = (username: string, password:string): ThunkAction<void,
       dispatch(userActions.setCurrentUser(response.user));
       localStorage.setItem("token", response.token);
       dispatch(userActions.setIsLoading(false));
-      navigate(`/`)
     }
   };
 }
@@ -53,7 +50,6 @@ export const updateUser = (user_id: number, username: string, password:string): 
       dispatch(errorActions.setError(response.error));
     } else { 
       dispatch(userActions.setSelectedUser(response));
-      navigate(`/user/${response.id}`)
     }
   };
 }
@@ -66,8 +62,7 @@ export const deleteUser = (user_id:number): ThunkAction<void, RootState, unknown
       dispatch(errorActions.setError(response.error));
     } else { 
       dispatch(userActions.setUsers(response));
-      // local storage remove item
-      navigate(`/users`)
+      localStorage.removeItem("token");
     }
   };
 }
@@ -84,7 +79,6 @@ export const loginUser = (username:string, password:string): ThunkAction<void, R
       dispatch(userActions.setCurrentUser(response.user));
       localStorage.setItem("token", response.token);
       dispatch(userActions.setIsLoading(false));
-      navigate(`/`)
     }
   };
 }
