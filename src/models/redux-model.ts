@@ -7,7 +7,7 @@ export interface UserModel {
 export interface UserArrayModel {
   "all_users": UserModel[],
   "current_user": UserModel,
-  "particular_user": UserModel,
+  "selected_user": UserModel,
 }
 
 export interface PostModel {
@@ -22,7 +22,7 @@ export interface PostModel {
 
 export interface PostArrayModel {
   "all_posts": PostModel[],
-  "particular_post": PostModel,
+  "selected_post": PostModel,
 }
 
 export interface CommentModel {
