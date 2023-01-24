@@ -82,3 +82,10 @@ export const loginUser = (username:string, password:string): ThunkAction<void, R
     }
   };
 }
+
+export const logoutUser = (): ThunkAction<void, RootState, unknown, AnyAction> => {
+  return async (dispatch,getState) => {
+    localStorage.removeItem("token");
+    dispatch(userActions.clearCurrentUser());
+  };
+}

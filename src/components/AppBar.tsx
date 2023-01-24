@@ -14,17 +14,33 @@ import Button from '@mui/material/Button';
 import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import userSlice from '../store/userSlice';
-import { useAppDispatch } from '../hooks/redux-hooks';
+import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks';
+import { logoutUser } from '../store/user-actions';
 
-export const userActions = userSlice.actions;
-
-export default function MenuAppBar() {
+// Useful for toggling sort
+{/* 
   const [auth, setAuth] = React.useState(true);
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setAuth(event.target.checked);
   };
+<FormGroup>
+<FormControlLabel
+  control={
+    <Switch
+      checked={auth}
+      onChange={handleChange}
+      aria-label="login switch"
+    />
+  }
+  label={auth ? 'Logout' : 'Login'}
+/>
+</FormGroup> */
+}
+
+export default function MenuAppBar() {
+  const auth = useAppSelector(state => state.users.current_user.id != 0);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const isLoggedIn = auth && localStorage.hasOwnProperty("token");
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -38,32 +54,19 @@ export default function MenuAppBar() {
   const dispatch = useAppDispatch();
 
   const logOut = () => {
-    dispatch(userActions.clearCurrentUser());
-    localStorage.removeItem("token");
+    dispatch(logoutUser());
     setAnchorEl(null);
     navigate("/");
   };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <FormGroup>
-        <FormControlLabel
-          control={
-            <Switch
-              checked={auth}
-              onChange={handleChange}
-              aria-label="login switch"
-            />
-          }
-          label={auth ? 'Logout' : 'Login'}
-        />
-      </FormGroup>
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Gossip On Rails
           </Typography>
-          {auth && (
+          {isLoggedIn && (
             <div>
               <IconButton
                 size="large"
@@ -95,7 +98,7 @@ export default function MenuAppBar() {
               </Menu>
             </div>
           )}
-          {!auth && (
+          {!isLoggedIn && (
             <Link to='/login'>
               <Button color="inherit" sx={{ flexGrow: 0 }}>Login</Button>
             </Link>

@@ -25,6 +25,8 @@ const Login: React.FC = () => {
   const [password, setPassword] = useState('');
   const error = useAppSelector(state => state.errors.error);
   const isLoading = useAppSelector(state => state.users.isLoading);
+  const auth = useAppSelector(state => state.users.current_user.id != 0);
+  const isLoggedIn = auth && localStorage.hasOwnProperty("token");
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -35,7 +37,7 @@ const Login: React.FC = () => {
     navigate('/');
   };
 
-  return localStorage.hasOwnProperty("token") ? <Navigate to="/" /> : (
+  return isLoggedIn ? <Navigate to="/" /> : (
     <Grid container justifyContent="center" alignItems="center" style={{ minHeight: '100vh' }}>
       <Paper elevation={3} style={{ padding: '20px' }}>
         <form className={classes.form} onSubmit={handleSubmit}>

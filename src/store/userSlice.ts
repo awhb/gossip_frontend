@@ -37,7 +37,6 @@ const userSlice = createSlice({
     clearCurrentUser(state) {
       state.current_user = initialUserState.current_user;
     },
-    // when logging out , clear current user, remove token, then redirect
   },
 });
 
