@@ -32,10 +32,11 @@ const Login: React.FC = () => {
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     dispatch(loginUser(username, password));
+    navigate('/');
   };
 
   return localStorage.hasOwnProperty("token") ? <Navigate to="/" /> : (
-    <Grid container justify="center" alignItems="center" style={{ minHeight: '100vh' }}>
+    <Grid container justifyContent="center" alignItems="center" style={{ minHeight: '100vh' }}>
       <Paper elevation={3} style={{ padding: '20px' }}>
         <form className={classes.form} onSubmit={handleSubmit}>
           <h2>Login</h2>
