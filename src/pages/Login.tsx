@@ -4,7 +4,7 @@ import { TextField, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, Paper, Typography } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../store/authSlice';
+import { login } from '../store/userSlice';
 import LoadingSpinner from '../components/LoadingSpinner';
 
 const useStyles = makeStyles((theme) => ({

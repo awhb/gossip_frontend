@@ -1,8 +1,13 @@
 export interface UserModel {
   "id": number,
   "username": string,
-  "password": string,
   "created_at": Date,
+}
+
+export interface UserArrayModel {
+  "all_users": UserModel[],
+  "current_user": UserModel,
+  "particular_user": UserModel,
 }
 
 export interface PostModel {
@@ -36,7 +41,6 @@ export interface CategoryModel {
 
 export interface CategoryArrayModel {
   "all_categories": CategoryModel[],
-  "available_categories": CategoryModel[],
   "selected_categories": CategoryModel[],
   "post_categories": CategoryModel[],
 }
