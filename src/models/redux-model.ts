@@ -16,14 +16,13 @@ export interface PostModel {
 }
 
 export interface PostArrayModel {
-  all_posts: PostModel[],
-  particular_post: PostModel,
+  "all_posts": PostModel[],
+  "particular_post": PostModel,
 }
 
 export interface CommentModel {
   "id": number,
   "content": string,
-  "user_id": number,
   "creator": string,
   "post_id": number,
   "created_at": Date,
@@ -37,5 +36,7 @@ export interface CategoryModel {
 
 export interface CategoryArrayModel {
   "all_categories": CategoryModel[],
+  "available_categories": CategoryModel[],
   "selected_categories": CategoryModel[],
+  "post_categories": CategoryModel[],
 }
