@@ -6,7 +6,7 @@ export default {
     var response = await Api().get("/posts");
     return response.data;
   },
-  async getParticularPost(post_id:number) {
+  async getSelectedPost(post_id:number) {
     var response = await Api().get(`/posts/${post_id}`);
     return response.data;
   },

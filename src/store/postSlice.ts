@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialPostState:PostArrayModel = {
   all_posts: [],
-  particular_post: {
+  selected_post: {
     "id": 0,
     "title": "",
     "content": "",
@@ -21,8 +21,8 @@ const postSlice = createSlice({
     setPosts(state, action: PayloadAction<PostModel[]>) {
       state.all_posts = action.payload;
     }, 
-    setParticularPost(state, action: PayloadAction<PostModel>) {
-      state.particular_post = action.payload;
+    setSelectedPost(state, action: PayloadAction<PostModel>) {
+      state.selected_post = action.payload;
     }
   }
 });

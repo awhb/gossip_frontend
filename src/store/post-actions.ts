@@ -2,42 +2,42 @@ import postSlice from "./postSlice";
 import { AnyAction } from "@reduxjs/toolkit";
 import { ThunkAction } from "@reduxjs/toolkit";
 import { RootState } from "./index";
-import { CategoryModel, PostModel } from "../../src/models/redux-model";
+import { CategoryModel, ErrorModel, PostModel } from "../../src/models/redux-model";
 import postService from "../services/postService";
 import { useNavigate } from "react-router-dom";
+import errorSlice from "./errorSlice";
 
 export const postActions = postSlice.actions;
+export const errorActions = errorSlice.actions;
 
 const navigate = useNavigate();
 
 // index
 export const fetchPosts = (): ThunkAction<void, RootState, unknown, AnyAction> => {
   return async (dispatch,getState) => {
-    const response:PostModel[] = await postService.getAllPosts();
+    const response: PostModel[] = await postService.getAllPosts();
     dispatch(postActions.setPosts(response));
   };
 }
 
 // show
-export const fetchParticularPost = (post_id:number): ThunkAction<void, RootState, unknown, AnyAction> => { 
+export const fetchSelectedPost = (post_id:number): ThunkAction<void, RootState, unknown, AnyAction> => { 
   return async (dispatch,getState) => {
-    const response:PostModel = await postService.getParticularPost(post_id);
-    dispatch(postActions.setParticularPost(response));
+    const response: PostModel = await postService.getSelectedPost(post_id);
+    dispatch(postActions.setSelectedPost(response));
   };
 }
 
 // create post
 export const createPost = (title:string, content:string, user_id: number, categories: string[]): ThunkAction<void, RootState, unknown, AnyAction> => { 
   return async (dispatch,getState) => {
-    const response: = await postService.createPost(title, content, user_id, categories);
-    // if (response["error"]) {
-    //   dispatch(errorActions.setError(response));
-    // } else { 
-    //   dispatch(postActions.setParticularPost(response));
-    // }
-    dispatch(postActions.setParticularPost(response));
-    navigate(`/post/${response.id}`)
-    
+    const response: PostModel | ErrorModel = await postService.createPost(title, content, user_id, categories);
+    if ("error" in response) {
+      dispatch(errorActions.setError(response.error));
+    } else { 
+      dispatch(postActions.setSelectedPost(response));
+      navigate(`/post/${response.id}`)
+    }
 
   };
 }
@@ -45,17 +45,25 @@ export const createPost = (title:string, content:string, user_id: number, catego
 // update post
 export const updatePost = (post_id:number, title:string, content:string, user_id: number, categories: string[]): ThunkAction<void, RootState, unknown, AnyAction> => {
   return async (dispatch,getState) => {
-    const response:PostModel = await postService.updatePost(post_id, title, content, user_id, categories);
-    dispatch(postActions.setParticularPost(response));
+    const response: PostModel | ErrorModel = await postService.updatePost(post_id, title, content, user_id, categories);
+    if ("error" in response) {
+      dispatch(errorActions.setError(response.error));
+    } else { 
+      dispatch(postActions.setSelectedPost(response));
+      navigate(`/post/${response.id}`)
+    }
   };
-  // remember to redirect in the onSubmit handler in updatePost form
 }
 
 // delete post
 export const deletePost = (post_id:number): ThunkAction<void, RootState, unknown, AnyAction> => {
   return async (dispatch,getState) => {
-    const response:PostModel = await postService.deletePost(post_id);
-    dispatch(postActions.setAllPosts(response));
+    const response: PostModel[] | ErrorModel = await postService.deletePost(post_id);
+    if ("error" in response) {
+      dispatch(errorActions.setError(response.error));
+    } else { 
+      dispatch(postActions.setPosts(response));
+      navigate(`/posts`)
+    }
   };
-  // remember to redirect in function that calls deletePost
 }
