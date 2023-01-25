@@ -4,14 +4,14 @@ import Home from "./components/Home";
 import Posts from "./components/Posts";
 import Recipe from "./components/Recipe"
 import NewRecipe from "./components/NewRecipe";
-import Signup from "./pages/Signup";
-import Login from "./pages/Login";
+import Signup from "./pages/forms/Signup";
+import Login from "./pages/forms/Login";
 import User from "./pages/User";
 import "./App.css";
 import MenuAppBar from "./components/MenuAppBar";
 import { createTheme, ThemeProvider } from '@material-ui/core';
 import { blue, orange } from '@material-ui/core/colors';
-import UpdateUser from "./pages/UpdateUser";
+import UpdateUser from "./pages/forms/UpdateUser";
 
 
 const theme = createTheme({

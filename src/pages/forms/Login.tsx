@@ -3,13 +3,11 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import { TextField, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, Paper, Typography } from '@material-ui/core';
-import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks';
-import { loginUser } from '../store/user-actions';
-import LoadingSpinner from '../components/LoadingSpinner';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks';
+import { loginUser } from '../../store/user-actions';
+import LoadingSpinner from '../../components/LoadingSpinner';
 import Grid from '@material-ui/core/Grid';
-import errorSlice from '../store/errorSlice';
 
-export const errorActions = errorSlice.actions;
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -35,8 +33,8 @@ const Login: React.FC = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (!localStorage.hasOwnProperty("token")) {
-      navigate('/login');
+    if (isLoggedIn) {
+      navigate('/');
     }
   }, [isLoading, error, navigate]);
 
@@ -48,7 +46,7 @@ const Login: React.FC = () => {
     }
   };
 
-  return isLoggedIn ? <Navigate to="/" /> : (
+  return (
     <Grid container justifyContent="center" alignItems="center" style={{ minHeight: '100vh' }}>
       <Paper elevation={3} style={{ padding: '20px' }}>
         <form className={classes.form} onSubmit={handleSubmit}>

@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { useAppSelector, useAppDispatch } from '../../hooks/redux-hooks';
+import { updateUser } from '../../store/user-actions';
 import { TextField, Button } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import { Box, Paper, Typography } from '@material-ui/core';
-import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks';
-import { createUser } from '../store/user-actions';
-import LoadingSpinner from '../components/LoadingSpinner';
-import Grid from '@material-ui/core/Grid';
-import errorSlice from '../store/errorSlice';
-
-export const errorActions = errorSlice.actions;
+import {
+  Typography,
+  Paper,
+  makeStyles
+} from '@material-ui/core';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -22,37 +21,37 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Signup: React.FC = () => {
+const UpdateUser: React.FC = () => {
   const classes = useStyles();
-  const [username, setUsername] = useState('');
+  const { user_id } = useParams();
+  const current_user = useAppSelector(state => state.users.current_user);
+  const [username, setUsername] = useState(current_user.username);
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-  const auth = useAppSelector(state => state.users.current_user.id != 0);
-  const isLoggedIn = auth && localStorage.hasOwnProperty("token");
-
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const isRightUser = current_user.id == parseInt(user_id as string);
 
   useEffect(() => {
-    if (!localStorage.hasOwnProperty("token")) {
-      navigate('/login');
-    }
-  }, [isLoading, error, navigate]);
-
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    dispatch(createUser(username, password));
-    if (localStorage.hasOwnProperty("token")) {
+    if (!isRightUser) {
       navigate('/');
     }
-  };
+  }, [isLoading, error, navigate]);
+  
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    dispatch(updateUser(parseInt(user_id as string), username, password));
+    if (!error) {
+      navigate(`/users/${user_id}`);
+    }
+  }
 
-  return isLoggedIn ? <Navigate to="/" /> : (
-    <Grid container justifyContent="center" alignItems="center" style={{ minHeight: '100vh' }}>
+  return !isRightUser ? <Navigate to="/" /> :(
+    <div>
       <Paper elevation={3} style={{ padding: '20px' }}>
         <form className={classes.form} onSubmit={handleSubmit}>
-          <h2>Sign Up</h2>
+          <h2>Login</h2>
           <TextField
             id="username"
             label="Username"
@@ -68,20 +67,19 @@ const Signup: React.FC = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <br />
-          {isLoading && (<LoadingSpinner />)}
           {error && (
             <Typography variant="body2" color="error">
               {error}
             </Typography>
           )}
           <Button variant="contained" color="primary" type="submit" className={classes.button}>
-            Sign Up
+            Login
           </Button>
         </form>
       </Paper>
-    </Grid>  
+    </div>
+
   );
 };
 
-export default Signup;
-
+export default UpdateUser;
