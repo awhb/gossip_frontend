@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../hooks/redux-hooks';
 import { updateUser } from '../store/user-actions';
 import { TextField, Button } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import { Paper } from '@material-ui/core';
-import { useNavigate } from 'react-router-dom';
+import {
+  Typography,
+  Paper,
+  makeStyles
+} from '@material-ui/core';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -18,22 +21,36 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const UserUpdate: React.FC = () => {
+const UpdateUser: React.FC = () => {
   const classes = useStyles();
   const { user_id } = useParams();
   const current_user = useAppSelector(state => state.users.current_user);
   const [username, setUsername] = useState(current_user.username);
   const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const isRightUser = current_user.id == parseInt(user_id as string);
+
+  useEffect(() => {
+    setIsLoading(useAppSelector(state => state.users.isLoading));
+  }, [useAppSelector(state => state.users.isLoading)]);
+
+  useEffect(() => {
+    setError(useAppSelector(state => state.errors.error));
+  }, [useAppSelector(state => state.errors.error)]);
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     dispatch(updateUser(parseInt(user_id as string), username, password));
-    navigate(`/users/${user_id}`);
+    if (!error) {
+      navigate(`/users/${user_id}`);
+    }
+
   }
 
-  return (
+  return !isRightUser ? <Navigate to="/" /> :(
     <div>
       <Paper elevation={3} style={{ padding: '20px' }}>
         <form className={classes.form} onSubmit={handleSubmit}>
@@ -67,3 +84,5 @@ const UserUpdate: React.FC = () => {
 
   );
 };
+
+export default UpdateUser;

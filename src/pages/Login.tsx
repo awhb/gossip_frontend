@@ -23,13 +23,21 @@ const Login: React.FC = () => {
   const classes = useStyles();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const error = useAppSelector(state => state.errors.error);
-  const isLoading = useAppSelector(state => state.users.isLoading);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
   const auth = useAppSelector(state => state.users.current_user.id != 0);
   const isLoggedIn = auth && localStorage.hasOwnProperty("token");
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    setIsLoading(useAppSelector(state => state.users.isLoading));
+  }, [useAppSelector(state => state.users.isLoading)]);
+
+  useEffect(() => {
+    setError(useAppSelector(state => state.errors.error));
+  }, [useAppSelector(state => state.errors.error)]);
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();

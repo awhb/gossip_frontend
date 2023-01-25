@@ -11,6 +11,7 @@ import "./App.css";
 import MenuAppBar from "./components/MenuAppBar";
 import { createTheme, ThemeProvider } from '@material-ui/core';
 import { blue, orange } from '@material-ui/core/colors';
+import UpdateUser from "./pages/UpdateUser";
 
 
 const theme = createTheme({
@@ -40,7 +41,7 @@ function App() {
               <Route path="/posts/new" element={<NewRecipe />} />
               <Route path="/*" element={<Home />} />
               <Route path="/users/:user_id" element={<User />} />
-              <Route path="/users/:user_id/update" element={<UserUpdate />} />
+              <Route path="/users/:user_id/update" element={<UpdateUser />} />
             </Routes>
           </main>
         </Router>

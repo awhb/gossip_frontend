@@ -23,11 +23,21 @@ const Signup: React.FC = () => {
   const classes = useStyles();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const error = useAppSelector(state => state.errors.error);
-  const isLoading = useAppSelector(state => state.users.isLoading);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+  const auth = useAppSelector(state => state.users.current_user.id != 0);
+  const isLoggedIn = auth && localStorage.hasOwnProperty("token");
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    setIsLoading(useAppSelector(state => state.users.isLoading));
+  }, [useAppSelector(state => state.users.isLoading)]);
+
+  useEffect(() => {
+    setError(useAppSelector(state => state.errors.error));
+  }, [useAppSelector(state => state.errors.error)]);
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -35,7 +45,7 @@ const Signup: React.FC = () => {
     navigate('/');
   };
 
-  return localStorage.hasOwnProperty("token") ? <Navigate to="/" /> : (
+  return isLoggedIn ? <Navigate to="/" /> : (
     <Grid container justifyContent="center" alignItems="center" style={{ minHeight: '100vh' }}>
       <Paper elevation={3} style={{ padding: '20px' }}>
         <form className={classes.form} onSubmit={handleSubmit}>
