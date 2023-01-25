@@ -1,4 +1,4 @@
-import { ErrorModel } from "../../src/models/redux-model";
+import { ErrorModel } from "../../models/redux-model";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialErrorState:ErrorModel = {

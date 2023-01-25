@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../hooks/redux-hooks";
-import { fetchPosts } from "../store/post-actions";
+import { fetchPosts } from "../store/posts/post-actions";
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';

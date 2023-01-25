@@ -1,6 +1,6 @@
-import { UserModel, UserArrayModel } from "../../src/models/redux-model";
+import { UserModel, UserArrayModel } from "../../models/redux-model";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import userService from "../services/userService";
+import userService from "../../services/userService";
 
 const initialUserState:UserArrayModel = {
   all_users: [],

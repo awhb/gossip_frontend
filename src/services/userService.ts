@@ -1,25 +1,24 @@
 import Api from "./Api";
-import { UserModel } from "../../src/models/redux-model";
 
 export default {
   async getAllUsers() {
     var response = await Api().get("/users");
     return response.data;
   },
-  async getSelectedUser(user_id: number) {
-    var response = await Api().get(`/users/${user_id}`);
+  async getSelectedUser(id: number) {
+    var response = await Api().get(`/users/${id}`);
     return response.data;
   },
   async createUser(username: string, password: string) {
     var response = await Api().post(`/users`, { username, password });
     return response.data;
   },
-  async updateUser(user_id: number, username: string, password: string) {
-    var response = await Api().put(`/users/${user_id}`, { "user": { "id": user_id, "username": username, "password": password } });
+  async updateUser(id: number, username: string, password: string) {
+    var response = await Api().put(`/users/${id}`, { "user": { "id": id, "username": username, "password": password } });
     return response.data;
   },
-  async deleteUser(user_id: number) {
-    var response = await Api().delete(`/users/${user_id}`);
+  async deleteUser(id: number) {
+    var response = await Api().delete(`/users/${id}`);
     return response.data;
   },
   // login

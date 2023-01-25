@@ -1,10 +1,10 @@
 import postSlice from "./postSlice";
 import { AnyAction } from "@reduxjs/toolkit";
 import { ThunkAction } from "@reduxjs/toolkit";
-import { RootState } from "./index";
-import { ErrorModel, PostModel } from "../../src/models/redux-model";
-import postService from "../services/postService";
-import errorSlice from "./errorSlice";
+import { RootState } from "../index";
+import { ErrorModel, PostModel } from "../../models/redux-model";
+import postService from "../../services/postService";
+import errorSlice from "../errors/errorSlice";
 
 export const postActions = postSlice.actions;
 export const errorActions = errorSlice.actions;
@@ -30,7 +30,7 @@ export const fetchSelectedPost = (post_id:number): ThunkAction<void, RootState, 
 // create post
 export const createPost = (title:string, content:string, user_id: number, categories: string[]): ThunkAction<void, RootState, unknown, AnyAction> => { 
   return async (dispatch,getState) => {
-    const response: PostModel | ErrorModel = await postService.createPost(title, content, user_id, categories);
+    const response: PostModel | ErrorModel = await postService.createPost(title, content, categories, user_id);
     if ("error" in response) {
       dispatch(errorActions.setError(response.error));
     } else { 
@@ -44,7 +44,7 @@ export const createPost = (title:string, content:string, user_id: number, catego
 // update post
 export const updatePost = (post_id:number, title:string, content:string, user_id: number, categories: string[]): ThunkAction<void, RootState, unknown, AnyAction> => {
   return async (dispatch,getState) => {
-    const response: PostModel | ErrorModel = await postService.updatePost(post_id, title, content, user_id, categories);
+    const response: PostModel | ErrorModel = await postService.updatePost(post_id, title, content, categories, user_id);
     if ("error" in response) {
       dispatch(errorActions.setError(response.error));
     } else { 

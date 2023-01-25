@@ -12,9 +12,9 @@ import {
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
-import userSlice from '../store/userSlice';
+import userSlice from '../store/users/userSlice';
 import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks';
-import { logoutUser } from '../store/user-actions';
+import { logoutUser } from '../store/users/user-actions';
 
 // Useful for toggling sort
 {/* 

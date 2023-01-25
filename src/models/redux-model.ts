@@ -16,6 +16,7 @@ export interface PostModel {
   "title": string,
   "content": string,
   "user_id": number,
+  "categories": string[],
   "creator": string,
   "created_at": Date,
   "upvotes": number,
@@ -35,15 +36,14 @@ export interface CommentModel {
   "updated_at": Date,
 }
 
-export interface CategoryModel {
-  "id": number,
-  "name": string,
+export interface CommentArrayModel {
+  "all_comments": CommentModel[],
+  "selected_comment": CommentModel,
 }
 
-export interface CategoryArrayModel {
-  "all_categories": CategoryModel[],
-  "selected_categories": CategoryModel[],
-  "post_categories": CategoryModel[],
+export interface CategoriesModel {
+  "all_categories": string[],
+  "selected_categories": string[],
 }
 
 export interface ErrorModel {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../hooks/redux-hooks';
-import { updateUser } from '../../store/user-actions';
+import { updateUser } from '../../store/users/user-actions';
 import { TextField, Button } from '@material-ui/core';
 import {
   Typography,

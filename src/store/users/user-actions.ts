@@ -1,11 +1,11 @@
 import userSlice from "./userSlice";
 import { AnyAction } from "@reduxjs/toolkit";
 import { ThunkAction } from "@reduxjs/toolkit";
-import { RootState } from "./index";
-import { AuthModel, ErrorModel, UserModel } from "../../src/models/redux-model";
-import userService from "../services/userService";
+import { RootState } from "../index";
+import { AuthModel, ErrorModel, UserModel } from "../../models/redux-model";
+import userService from "../../services/userService";
 import { useNavigate } from "react-router-dom";
-import errorSlice from "./errorSlice";
+import errorSlice from "../errors/errorSlice";
 
 export const userActions = userSlice.actions;
 export const errorActions = errorSlice.actions;

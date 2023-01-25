@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../../hooks/redux-hooks';
-import { fetchSelectedUser, deleteUser } from '../../store/user-actions';
+import { fetchSelectedUser, deleteUser } from '../../store/users/user-actions';
 import { Navigate, useNavigate } from 'react-router-dom';
 import {
   Grid,

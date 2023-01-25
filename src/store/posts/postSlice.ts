@@ -1,4 +1,4 @@
-import { PostModel, PostArrayModel } from "../../src/models/redux-model";
+import { PostModel, PostArrayModel } from "../../models/redux-model";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialPostState:PostArrayModel = {
@@ -9,6 +9,7 @@ const initialPostState:PostArrayModel = {
     "content": "",
     "user_id": 0,
     "creator": "",
+    "categories": [],
     "created_at": new Date("2023-01-25"),
     "upvotes": 0,
   }
