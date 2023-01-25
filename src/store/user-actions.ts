@@ -38,6 +38,7 @@ export const createUser = (username: string, password:string): ThunkAction<void,
       dispatch(userActions.setCurrentUser(response.user));
       localStorage.setItem("token", response.token);
       dispatch(userActions.setIsLoading(false));
+      dispatch(errorActions.clearError());
     }
   };
 }
@@ -49,6 +50,7 @@ export const updateUser = (user_id: number, username: string, password:string): 
     if ("error" in response) {
       dispatch(errorActions.setError(response.error));
     } else { 
+      dispatch(errorActions.clearError());
       dispatch(userActions.setSelectedUser(response));
     }
   };
@@ -61,6 +63,7 @@ export const deleteUser = (user_id:number): ThunkAction<void, RootState, unknown
     if ("error" in response) {
       dispatch(errorActions.setError(response.error));
     } else { 
+      dispatch(errorActions.clearError());
       dispatch(userActions.setUsers(response));
       localStorage.removeItem("token");
     }
@@ -75,10 +78,11 @@ export const loginUser = (username:string, password:string): ThunkAction<void, R
     if ("error" in response) {
       dispatch(userActions.setIsLoading(false));
       dispatch(errorActions.setError(response.error));
-    } else { 
+    } else {
       dispatch(userActions.setCurrentUser(response.user));
       localStorage.setItem("token", response.token);
       dispatch(userActions.setIsLoading(false));
+      dispatch(errorActions.clearError());
     }
   };
 }

@@ -34,6 +34,7 @@ export const createPost = (title:string, content:string, user_id: number, catego
     if ("error" in response) {
       dispatch(errorActions.setError(response.error));
     } else { 
+      dispatch(errorActions.clearError());
       dispatch(postActions.setSelectedPost(response));
     }
 
@@ -47,6 +48,7 @@ export const updatePost = (post_id:number, title:string, content:string, user_id
     if ("error" in response) {
       dispatch(errorActions.setError(response.error));
     } else { 
+      dispatch(errorActions.clearError());
       dispatch(postActions.setSelectedPost(response));
     }
   };
@@ -59,6 +61,7 @@ export const deletePost = (post_id:number): ThunkAction<void, RootState, unknown
     if ("error" in response) {
       dispatch(errorActions.setError(response.error));
     } else { 
+      dispatch(errorActions.clearError());
       dispatch(postActions.setPosts(response));
     }
   };
