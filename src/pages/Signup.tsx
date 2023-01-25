@@ -44,7 +44,6 @@ const Signup: React.FC = () => {
     e.preventDefault();
     dispatch(createUser(username, password));
     if (localStorage.hasOwnProperty("token")) {
-      dispatch(errorActions.clearError());
       navigate('/');
     }
   };

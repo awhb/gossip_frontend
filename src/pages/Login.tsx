@@ -44,7 +44,6 @@ const Login: React.FC = () => {
     e.preventDefault();
     dispatch(loginUser(username, password));
     if (localStorage.hasOwnProperty("token")) {
-      dispatch(errorActions.clearError());
       navigate('/');
     }
   };

@@ -46,8 +46,7 @@ const UpdateUser: React.FC = () => {
     dispatch(updateUser(parseInt(user_id as string), username, password));
     if (!error) {
       navigate(`/users/${user_id}`);
-    }    if (localStorage.hasOwnProperty("token")) {
-      dispatch(errorActions.clearError());
+    } if (localStorage.hasOwnProperty("token")) {
       navigate('/');
     }
 
