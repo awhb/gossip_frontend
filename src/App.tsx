@@ -9,6 +9,11 @@ import MenuAppBar from "./components/MenuAppBar";
 import { createTheme, ThemeProvider } from '@material-ui/core';
 import { blue, orange } from '@material-ui/core/colors';
 import UpdateUser from "./pages/users/UpdateUser";
+import Post from "./pages/posts/Post";
+import NewPost from "./pages/posts/NewPost";
+import UpdatePost from "./pages/posts/UpdatePost";
+import NewComment from "./pages/comments/NewComment";
+import UpdateComment from "./pages/comments/UpdateComment";
 
 
 const theme = createTheme({
@@ -39,8 +44,8 @@ function App() {
               <Route path="/posts/new" element={<NewPost />} />
               <Route path="/posts/:post_id/update" element={<UpdatePost />} />
 
-              {/* Comments? <Route path="/comments/new" element={<NewComment />} />
-              <Route path="/comments/:comment_id/update" element={<UpdateComment />} /> */}
+              <Route path="/comments/new" element={<NewComment />} />
+              <Route path="/comments/:comment_id/update" element={<UpdateComment />} />
 
               <Route path="/users/:user_id" element={<User />} />
               <Route path="/users/:user_id/update" element={<UpdateUser />} />

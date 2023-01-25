@@ -24,6 +24,7 @@ export interface PostModel {
 
 export interface PostArrayModel {
   "all_posts": PostModel[],
+  "filtered_posts": PostModel[],
   "selected_post": PostModel,
 }
 
@@ -32,6 +33,7 @@ export interface CommentModel {
   "content": string,
   "creator": string,
   "post_id": number,
+  "user_id": number,
   "created_at": Date,
   "updated_at": Date,
 }
@@ -43,7 +45,6 @@ export interface CommentArrayModel {
 
 export interface CategoriesModel {
   "all_categories": string[],
-  "selected_categories": string[],
 }
 
 export interface ErrorModel {

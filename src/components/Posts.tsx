@@ -1,46 +1,41 @@
-import React, { useState, useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../hooks/redux-hooks";
-import { fetchPosts } from "../store/posts/post-actions";
+import React, { useEffect } from 'react';
+import { useAppSelector, useAppDispatch } from '../hooks/redux-hooks';
 import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+import { Box, Card, CardContent, CardHeader, Typography } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
+const useStyles = makeStyles({
+  post: {
+    margin: '20px 0',
   },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  },
-}));
+  upvotes: {
+    display: 'inline-block',
+    marginRight: '10px',
+  }
+});
 
 const Posts: React.FC = () => {
-  const dispatch = useAppDispatch();
-  const allPosts = useAppSelector((state) => state.posts.all_posts);
   const classes = useStyles();
-
-  useEffect(() => {
-    dispatch(fetchPosts());
-  });
+  const posts = useAppSelector(state => state.posts.filtered_posts);
+  const dispatch = useAppDispatch();
 
   return (
-    <div className={classes.root}>
-      <Grid container spacing={3}>
-        {allPosts.map((post) => (
-          <Grid item xs={12} sm={6} md={4} key={post.id}>
-            <Paper className={classes.paper}>
-              <Typography variant="h6">{post.title}</Typography>
-              <Typography>{post.creator}</Typography>
-            </Paper>
-          </Grid>
-        ))}
-      </Grid>
+    <div>
+      <Link to={`/posts/new`}>Create Post</Link>
+      {posts.map(post => (
+        <Card className={classes.post} key={post.id}>
+          <CardHeader title={post.title} subheader={`by ${post.creator}`} />
+          <CardContent>
+            <div className={classes.upvotes}>
+              <Typography>{post.upvotes}</Typography>
+            </div>
+            <Typography>{post.created_at.toDateString()}</Typography>
+          </CardContent>
+        </Card>
+      ))}
     </div>
   );
 };
 
 export default Posts;
+

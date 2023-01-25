@@ -8,6 +8,7 @@ const initialCommentState:CommentArrayModel = {
     "content": "",
     "creator": "",
     "post_id": 0,
+    "user_id": 0,
     "created_at": new Date("2023-01-25"),
     "updated_at": new Date("2023-01-25"),
   }
