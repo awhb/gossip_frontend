@@ -7,6 +7,9 @@ import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks';
 import { createUser } from '../store/user-actions';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Grid from '@material-ui/core/Grid';
+import errorSlice from '../store/errorSlice';
+
+export const errorActions = errorSlice.actions;
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -32,17 +35,18 @@ const Signup: React.FC = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    setIsLoading(useAppSelector(state => state.users.isLoading));
-  }, [useAppSelector(state => state.users.isLoading)]);
-
-  useEffect(() => {
-    setError(useAppSelector(state => state.errors.error));
-  }, [useAppSelector(state => state.errors.error)]);
+    if (!localStorage.hasOwnProperty("token")) {
+      navigate('/login');
+    }
+  }, [isLoading, error, navigate]);
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     dispatch(createUser(username, password));
-    navigate('/');
+    if (localStorage.hasOwnProperty("token")) {
+      dispatch(errorActions.clearError());
+      navigate('/');
+    }
   };
 
   return isLoggedIn ? <Navigate to="/" /> : (
