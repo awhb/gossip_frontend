@@ -1,17 +1,14 @@
 import { useMemo } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Home from "./pages/Home";
-import Posts from "./components/Posts";
-import Recipe from "./components/Recipe"
-import NewRecipe from "./components/NewRecipe";
-import Signup from "./pages/forms/Signup";
-import Login from "./pages/forms/Login";
-import User from "./pages/User";
+import Home from "./pages/auth/Home";
+import Signup from "./pages/auth/Signup";
+import Login from "./pages/auth/Login";
+import User from "./pages/users/User";
 import "./App.css";
 import MenuAppBar from "./components/MenuAppBar";
 import { createTheme, ThemeProvider } from '@material-ui/core';
 import { blue, orange } from '@material-ui/core/colors';
-import UpdateUser from "./pages/forms/UpdateUser";
+import UpdateUser from "./pages/users/UpdateUser";
 
 
 const theme = createTheme({
@@ -33,15 +30,22 @@ function App() {
           </header>
           <main>
             <Routes>
+              
+              <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
-              <Route path="/" element={<Home />} />
-              <Route path="/posts" element={<Posts />} />
-              <Route path="/posts/:post_id" element={<Recipe />} />
-              <Route path="/posts/new" element={<NewRecipe />} />
-              <Route path="/*" element={<Home />} />
+
+              <Route path="/posts/:post_id" element={<Post />} />
+              <Route path="/posts/new" element={<NewPost />} />
+              <Route path="/posts/:post_id/update" element={<UpdatePost />} />
+
+              {/* Comments? <Route path="/comments/new" element={<NewComment />} />
+              <Route path="/comments/:comment_id/update" element={<UpdateComment />} /> */}
+
               <Route path="/users/:user_id" element={<User />} />
               <Route path="/users/:user_id/update" element={<UpdateUser />} />
+
+              <Route path="/*" element={<Home />} />
             </Routes>
           </main>
         </Router>
