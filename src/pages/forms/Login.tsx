@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { TextField, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, Paper, Typography } from '@material-ui/core';
@@ -66,6 +66,9 @@ const Login: React.FC = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <br />
+          <Link to={`/signup`}>
+            <Button>Sign Up</Button>
+          </Link>
           {isLoading && (<LoadingSpinner />)}
           {error && (
             <Typography variant="body2" color="error">

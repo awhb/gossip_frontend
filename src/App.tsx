@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Home from "./components/Home";
+import Home from "./pages/Home";
 import Posts from "./components/Posts";
 import Recipe from "./components/Recipe"
 import NewRecipe from "./components/NewRecipe";
