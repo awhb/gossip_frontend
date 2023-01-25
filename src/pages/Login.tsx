@@ -34,7 +34,9 @@ const Login: React.FC = () => {
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     dispatch(loginUser(username, password));
-    navigate('/');
+    if (localStorage.hasOwnProperty("token")) {
+      navigate('/');
+    }
   };
 
   return isLoggedIn ? <Navigate to="/" /> : (

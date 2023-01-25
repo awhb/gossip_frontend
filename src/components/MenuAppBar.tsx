@@ -1,16 +1,15 @@
 import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import Switch from '@mui/material/Switch';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormGroup from '@mui/material/FormGroup';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
-import Button from '@mui/material/Button';
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  IconButton,
+  Typography,
+  MenuItem,
+  Menu,
+  Button,
+} from "@mui/material";
+import AccountCircle from "@mui/icons-material/AccountCircle";
 import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import userSlice from '../store/userSlice';
@@ -38,9 +37,9 @@ import { logoutUser } from '../store/user-actions';
 }
 
 export default function MenuAppBar() {
-  const auth = useAppSelector(state => state.users.current_user.id != 0);
+  const curr_user_id = useAppSelector(state => state.users.current_user.id);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const isLoggedIn = auth && localStorage.hasOwnProperty("token");
+  const isLoggedIn = curr_user_id !== 0 && localStorage.hasOwnProperty("token");
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -53,11 +52,17 @@ export default function MenuAppBar() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
+  const goToUserPage = () => {
+    handleClose();
+    navigate(`/user/${curr_user_id}`);
+  };
+
   const logOut = () => {
     dispatch(logoutUser());
-    setAnchorEl(null);
+    handleClose();
     navigate("/");
   };
+
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -93,7 +98,7 @@ export default function MenuAppBar() {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>My Account</MenuItem>
+                <MenuItem onClick={goToUserPage}>My Account</MenuItem>
                 <MenuItem onClick={logOut}>Logout</MenuItem>
               </Menu>
             </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import { useMemo } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./components/Home";
 import Posts from "./components/Posts";
@@ -7,9 +7,10 @@ import NewRecipe from "./components/NewRecipe";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import "./App.css";
-import AppBar from "./components/AppBar";
+import MenuAppBar from "./components/MenuAppBar";
 import { createTheme, ThemeProvider } from '@material-ui/core';
 import { blue, orange } from '@material-ui/core/colors';
+
 
 const theme = createTheme({
   palette: {
@@ -19,12 +20,14 @@ const theme = createTheme({
 });
 
 function App() {
+  const memoTheme = useMemo(() => theme, []);
+
   return (
-    <div className="App">
-      <ThemeProvider theme={theme}>
+    <ThemeProvider theme={memoTheme}>
+      <div className="App">
         <Router>
           <header className="App-header">
-            <AppBar />
+            <MenuAppBar />
           </header>
           <main>
             <Routes>
@@ -38,8 +41,8 @@ function App() {
             </Routes>
           </main>
         </Router>
-      </ThemeProvider>
-    </div>
+      </div>
+    </ThemeProvider>
   );
 }
 
