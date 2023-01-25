@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { useAppSelector, useAppDispatch } from '../hooks/redux-hooks';
 import { fetchSelectedUser, deleteUser } from '../store/user-actions';
 import { Navigate, useNavigate } from 'react-router-dom';
@@ -8,10 +8,10 @@ import {
   Typography,
   Paper,
   Button,
-  Link,
   makeStyles
 } from '@material-ui/core';
 import { AccountCircle } from '@material-ui/icons';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const UserMenu: React.FC = () => {
+const User: React.FC = () => {
   const classes = useStyles();
   const { user_id } = useParams();
   const dispatch = useAppDispatch();
@@ -75,4 +75,4 @@ const UserMenu: React.FC = () => {
 
 };
 
-export default UserMenu;
+export default User;

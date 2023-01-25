@@ -6,6 +6,7 @@ import Recipe from "./components/Recipe"
 import NewRecipe from "./components/NewRecipe";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
+import User from "./pages/User";
 import "./App.css";
 import MenuAppBar from "./components/MenuAppBar";
 import { createTheme, ThemeProvider } from '@material-ui/core';
@@ -35,9 +36,11 @@ function App() {
               <Route path="/signup" element={<Signup />} />
               <Route path="/" element={<Home />} />
               <Route path="/posts" element={<Posts />} />
-              <Route path="/posts/:id" element={<Recipe />} />
+              <Route path="/posts/:post_id" element={<Recipe />} />
               <Route path="/posts/new" element={<NewRecipe />} />
               <Route path="/*" element={<Home />} />
+              <Route path="/users/:user_id" element={<User />} />
+              <Route path="/users/:user_id/update" element={<UserUpdate />} />
             </Routes>
           </main>
         </Router>
