@@ -12,10 +12,18 @@ export const errorActions = errorSlice.actions;
 
 
 // index
-export const fetchComments = (): ThunkAction<void, RootState, unknown, AnyAction> => {
+export const fetchComments = (post_id:number): ThunkAction<void, RootState, unknown, AnyAction> => {
   return async (dispatch,getState) => {
-    const response: CommentModel[] = await commentService.getAllComments();
+    const response: CommentModel[] = await commentService.getAllComments(post_id);
     dispatch(commentActions.setComments(response));
+  };
+}
+
+// show
+export const fetchSelectedComment = (comment_id:number): ThunkAction<void, RootState, unknown, AnyAction> => { 
+  return async (dispatch,getState) => {
+    const response: CommentModel = await commentService.getComment(comment_id);
+    dispatch(commentActions.setSelectedComment(response));
   };
 }
 

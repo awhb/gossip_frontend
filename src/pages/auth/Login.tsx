@@ -36,7 +36,7 @@ const Login: React.FC = () => {
     if (isLoggedIn) {
       navigate('/');
     }
-  }, [isLoading, error, navigate]);
+  }, [isLoading, error]);
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();

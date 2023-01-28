@@ -4,7 +4,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Button, Card, CardContent, Typography } from '@material-ui/core';
 import { CommentModel } from '../models/redux-model';
 import { deleteComment, fetchComments } from '../store/comments/comment-actions';
+import { fetchSelectedPost } from '../store/posts/post-actions';
 import { Link, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 const useStyles = makeStyles({
   commentBody: {
@@ -27,10 +29,18 @@ const Comments: React.FC = () => {
   const comments: CommentModel[] = useAppSelector(state => state.comments.all_comments);
   const dispatch = useAppDispatch();
   const current_user = useAppSelector(state => state.users.current_user);
+  const current_post = useAppSelector(state => state.posts.selected_post);
   const navigate = useNavigate();
+  const { post_id } = useParams();
 
   useEffect(() => {
-    dispatch(fetchComments());
+    dispatch(fetchSelectedPost(parseInt(post_id as string)));
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (current_post.id !== 0) {
+      dispatch(fetchComments(current_post.id));
+    }
   }, [dispatch]);
 
   const handleDelete = (id: number) => {
@@ -47,12 +57,7 @@ const Comments: React.FC = () => {
             <Typography variant="body2" color="textPrimary" className={classes.commentBody} component="p">
               {comment.content}
             </Typography>
-            <Typography color="textSecondary" className={classes.metadata} gutterBottom>
-              {'Posted by ' + comment.creator + ' on ' + comment.created_at.toLocaleString()}
-              {comment.updated_at ? ' and last updated on ' + comment.updated_at.toLocaleString() : ''}
-            </Typography>
             {comment.user_id === current_user.id &&
-
               <div>
                 <Button variant="contained" color="primary" component={Link} to={`/comments/${comment.id}/update`}>
                   Update

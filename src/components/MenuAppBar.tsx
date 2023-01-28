@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 import {
   AppBar,
   Box,
@@ -16,30 +17,18 @@ import userSlice from '../store/users/userSlice';
 import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks';
 import { logoutUser } from '../store/users/user-actions';
 
-// Useful for toggling sort
-{/* 
-  const [auth, setAuth] = React.useState(true);
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setAuth(event.target.checked);
-  };
-<FormGroup>
-<FormControlLabel
-  control={
-    <Switch
-      checked={auth}
-      onChange={handleChange}
-      aria-label="login switch"
-    />
-  }
-  label={auth ? 'Logout' : 'Login'}
-/>
-</FormGroup> */
-}
+
+
 
 export default function MenuAppBar() {
   const curr_user_id = useAppSelector(state => state.users.current_user.id);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const isLoggedIn = curr_user_id !== 0 && localStorage.hasOwnProperty("token");
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+  }, [curr_user_id, dispatch, navigate]);
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -49,12 +38,9 @@ export default function MenuAppBar() {
     setAnchorEl(null);
   };
 
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-
   const goToUserPage = () => {
     handleClose();
-    navigate(`/user/${curr_user_id}`);
+    navigate(`/users/${curr_user_id}`);
   };
 
   const logOut = () => {

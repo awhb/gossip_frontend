@@ -73,7 +73,7 @@ const UpdateUser: React.FC = () => {
             </Typography>
           )}
           <Button variant="contained" color="primary" type="submit" className={classes.button}>
-            Login
+            Update
           </Button>
         </form>
       </Paper>

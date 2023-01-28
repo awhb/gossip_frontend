@@ -1,8 +1,12 @@
 import Api from "./Api";
 
 export default {
-  async getAllComments() {
-    var response = await Api().get(`/comments`);
+  async getAllComments(post_id: number) {
+    var response = await Api().get(`/posts/${post_id}/comments`);
+    return response.data;
+  },
+  async getComment(id:number) {
+    var response = await Api().get(`/comments/${id}`);
     return response.data;
   },
   async createComment(content:string, user_id: number, post_id: number) {
