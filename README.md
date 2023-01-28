@@ -1,5 +1,8 @@
 # CVWO Assignment Sample React App
 
+Name: Aw Hang Bin
+Matriculation Number: A0252492A
+
 This sample React app is provided to help you experiment and practice web development fundamentals.
 It shows how certain functionality can be implemented.
 However, do note that this is **far from a model example**.
